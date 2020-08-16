@@ -10,17 +10,18 @@ import javax.xml.stream.XMLStreamReader;
 import java.io.FileInputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class XMLProcessorStAX implements XMLProcessor {
     private XMLStreamReader streamXMLData;
-    private boolean isStop = false;
-    private List<Entity> entityList = new ArrayList<>();
+    private boolean isStop;
+    private List<Entity> entityList;
     
     @SneakyThrows
     @Override
     public List<? extends Entity> dataFromXml(Entity entity, String file) {
+        isStop = false;
+        entityList = new ArrayList<>();
         streamXMLData = XMLInputFactory.newInstance().createXMLStreamReader(file, new FileInputStream(file));
         while (streamXMLData.hasNext() && !isStop) {
             streamXMLData.next();
@@ -43,12 +44,29 @@ public class XMLProcessorStAX implements XMLProcessor {
                 security.setRegnumber(streamXMLData.getAttributeValue(21));
                 entityList.add(security);
             } else if (entity instanceof History){
+                String temp = "";
+//                List<Boolean> skipIndexAttr = new ArrayList<>();
+//                for (int i = 0; i < streamXMLData.getAttributeCount(); i++) {
+//                    if (streamXMLData.getAttributeValue(i).isEmpty()) skipIndexAttr.add(i,true);
+//                }
+                
                 History history = new History();
-                history.setTradedate(new SimpleDateFormat("yyyy-MM-dd").parse(streamXMLData.getAttributeValue(1)));
-                history.setSecid(streamXMLData.getAttributeValue(3));
-                history.setNumtrades(Double.parseDouble(streamXMLData.getAttributeValue(4)));
-                history.setOpen(Double.parseDouble(streamXMLData.getAttributeValue(6)));
-                history.setClose(Double.parseDouble(streamXMLData.getAttributeValue(11)));
+                temp = streamXMLData.getAttributeValue(1);
+                history.setTradedate(new SimpleDateFormat("yyyy-MM-dd").parse(temp));
+                
+                temp = streamXMLData.getAttributeValue(3);
+                history.setSecid(temp);
+                
+                temp = streamXMLData.getAttributeValue(4);
+                history.setNumtrades(Double.parseDouble(temp==""? "0.0": temp));
+                
+                temp = streamXMLData.getAttributeValue(6);
+                history.setOpen(Double.parseDouble(temp==""? "0.0": temp));
+                
+                temp = streamXMLData.getAttributeValue(11);
+                history.setClose(Double.parseDouble(temp==""? "0.0": temp));
+                
+                entityList.add(history);
             } else {
                 System.out.println("-> ERROR: entity didnt recognize");
             }
