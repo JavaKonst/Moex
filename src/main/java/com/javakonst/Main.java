@@ -16,10 +16,10 @@ public class Main {
         XMLProcessorStAX xmlProcessor = new XMLProcessorStAX();
     
         List<Security> securities = (List<Security>) xmlProcessor.dataFromXml(new Security(), file_securities);
-        securities.stream().forEachOrdered(e -> System.out.println(e.getSecid()));
+//        securities.stream().forEachOrdered(e -> System.out.println(e.getSecid()));
         
         List<History> histories = (List<History>) xmlProcessor.dataFromXml(new History(), file_history);
-        histories.stream().forEachOrdered(e -> System.out.println(e.getNumtrades()));
+//        histories.stream().forEachOrdered(e -> System.out.println(e.getNumtrades()));
     
     }
 }

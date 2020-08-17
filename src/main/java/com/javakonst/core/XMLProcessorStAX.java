@@ -51,6 +51,8 @@ public class XMLProcessorStAX implements XMLProcessor {
 //                }
                 
                 History history = new History();
+                
+                //TODO: сделать проверку значения поля на пустоту ""/null
                 temp = streamXMLData.getAttributeValue(1);
                 history.setTradedate(new SimpleDateFormat("yyyy-MM-dd").parse(temp));
                 
