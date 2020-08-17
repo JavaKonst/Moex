@@ -4,7 +4,6 @@ import lombok.Data;
 
 @Data
 public class Security extends Entity{
-//    private String secid;
     private String name;
     private String emitent_title;
     private String regnumber;
