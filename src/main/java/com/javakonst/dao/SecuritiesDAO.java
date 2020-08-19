@@ -33,7 +33,7 @@ public class SecuritiesDAO implements CRUDService<Security> {
     @Override
     public void entityUpdate(Security entity, List<Security> entityList) {
         for (int i = 0; i < entityList.size(); i++) {
-            if (entityList.get(i).equals(entity.getSecid())) {
+            if (entityList.get(i).getSecid().equals(entity.getSecid())) {
                 entityList.set(i, entity);
                 break;
             }

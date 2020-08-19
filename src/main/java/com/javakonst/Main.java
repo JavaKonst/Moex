@@ -1,8 +1,14 @@
 package com.javakonst;
 
-import com.javakonst.core.*;
-import com.javakonst.dao.*;
-import com.javakonst.entity.*;
+import com.javakonst.dao.CRUDService;
+import com.javakonst.dao.HistoryDAO;
+import com.javakonst.dao.SecuritiesDAO;
+import com.javakonst.entity.History;
+import com.javakonst.entity.Security;
+import com.javakonst.xmlparsers.XMLProcStAX;
+import com.javakonst.xmlparsers.XMLProc_2;
+import com.javakonst.xmlparsers.XMLProc_I_2;
+import com.javakonst.xmlparsers.XMLProcessor;
 
 import java.util.Date;
 import java.util.List;
@@ -12,14 +18,25 @@ public class Main {
     private static String file_history = "history.xml";
     
     public static void main(String[] args) {
-        XMLProcessor xmlPS = new XMLProcStAX(new Security());
-        XMLProcessor xmlPH = new XMLProcStAX(new History());
-
+        XMLProcessor xmlPS = new XMLProcStAX<>(new Security());
         List<Security> securities = xmlPS.dataFromXml(file_securities);
+
+        XMLProcessor xmlPH = new XMLProcStAX<>(new History());
         List<History> histories = xmlPH.dataFromXml(file_history);
 
-//        testReadXML(securities, histories);
-//        testCRUD (securities, histories);
+
+
+        XMLProc_I_2 xmlPS2 = new XMLProc_2();
+        List<Security> securityList2 = xmlPS2.dataFromXML(file_securities,new Security());
+
+        XMLProc_I_2 xmlPH2 = new XMLProc_2();
+        List<History> historyList2 = xmlPH2.dataFromXML(file_history, new History());
+
+
+        testReadXML(securities, histories);
+        testCRUD (securities, histories);
+        testReadXML(securityList2, historyList2);
+        testCRUD (securityList2, historyList2);
 
     }
 
