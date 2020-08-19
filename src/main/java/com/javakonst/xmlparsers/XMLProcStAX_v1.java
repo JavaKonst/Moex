@@ -8,13 +8,13 @@ import java.io.FileInputStream;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-public class XMLProcStAX<T extends Entity> implements XMLProcessor {
+public class XMLProcStAX_v1<T extends Entity> implements XMLProcessor_v1 {
     private XMLStreamReader streamXMLData;
     private boolean isStop;
     private T newEntity;
     private List<T> entityList;
 
-    public XMLProcStAX(T entity){
+    public XMLProcStAX_v1(T entity){
         newEntity = entity;
     }
 

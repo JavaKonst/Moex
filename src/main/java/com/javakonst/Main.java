@@ -5,10 +5,10 @@ import com.javakonst.dao.HistoryDAO;
 import com.javakonst.dao.SecuritiesDAO;
 import com.javakonst.entity.History;
 import com.javakonst.entity.Security;
-import com.javakonst.xmlparsers.XMLProcStAX;
-import com.javakonst.xmlparsers.XMLProc_2;
-import com.javakonst.xmlparsers.XMLProc_I_2;
-import com.javakonst.xmlparsers.XMLProcessor;
+import com.javakonst.xmlparsers.XMLProcStAX_v1;
+import com.javakonst.xmlparsers.XMLProcStAX_v2;
+import com.javakonst.xmlparsers.XMLProcessor_v2;
+import com.javakonst.xmlparsers.XMLProcessor_v1;
 
 import java.util.Date;
 import java.util.List;
@@ -18,18 +18,18 @@ public class Main {
     private static String file_history = "history.xml";
     
     public static void main(String[] args) {
-        XMLProcessor xmlPS = new XMLProcStAX<>(new Security());
+        XMLProcessor_v1 xmlPS = new XMLProcStAX_v1<>(new Security());
         List<Security> securities = xmlPS.dataFromXml(file_securities);
 
-        XMLProcessor xmlPH = new XMLProcStAX<>(new History());
+        XMLProcessor_v1 xmlPH = new XMLProcStAX_v1<>(new History());
         List<History> histories = xmlPH.dataFromXml(file_history);
 
 
 
-        XMLProc_I_2 xmlPS2 = new XMLProc_2();
+        XMLProcessor_v2 xmlPS2 = new XMLProcStAX_v2();
         List<Security> securityList2 = xmlPS2.dataFromXML(file_securities,new Security());
 
-        XMLProc_I_2 xmlPH2 = new XMLProc_2();
+        XMLProcessor_v2 xmlPH2 = new XMLProcStAX_v2();
         List<History> historyList2 = xmlPH2.dataFromXML(file_history, new History());
 
 

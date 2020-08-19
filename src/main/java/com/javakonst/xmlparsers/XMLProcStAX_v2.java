@@ -11,7 +11,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-public class XMLProc_2 implements XMLProc_I_2 {
+public class XMLProcStAX_v2 implements XMLProcessor_v2 {
     private XMLStreamReader streamXMLData;
     private boolean isStop;
 
