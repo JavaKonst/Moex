@@ -19,14 +19,18 @@ public class Main {
         String filter = "tradedate=2010";
         SortBy sort = SortBy.OPEN;
 
+        //Создание инструмента
         TableUtils tableUtils = new TableUtils();
-//        List<Security> securityList = tableUtils.getListSecuritires(file_securities);
-//        List<History> historyList = tableUtils.getListHistory(file_history);
+
+        //Получение списков из файлов (ценные бумаги и история торгов)
+        List<Security> securityList = tableUtils.getListSecuritires(file_securities);
+        List<History> historyList = tableUtils.getListHistory(file_history);
 
 //        testReadXML(securityList, historyList);
 //        testCRUD(securityList, historyList);
 
-
+        //Вывод таблицы с заданными, техзаданием, столбцами с возможностью сортировки по любым столбцам,
+        //а также фильтр по столбцам EMITENT_TITLE и TRADEDATE
         tableUtils.printTable(file_securities, file_history, sort, filter);
     }
 
