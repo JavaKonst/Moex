@@ -12,7 +12,7 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
 
-public class XMLProcStAX_v2 implements XMLProcessor_v2 {
+public class XMLProcStAX implements XMLProcessor {
     private XMLStreamReader streamXMLData;
     private boolean isStop;
 

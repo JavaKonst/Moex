@@ -16,16 +16,18 @@ public class Main {
     public static void main(String[] args) {
         String file_securities = "securitiesShort.xml";
         String file_history = "history.xml";
-        String filter = "";
+        String filter = "tradedate=2010";
+        SortBy sort = SortBy.OPEN;
 
         TableUtils tableUtils = new TableUtils();
-        List<Security> securityList = tableUtils.getListSecuritires(file_securities);
-        List<History> historyList = tableUtils.getListHistory(file_history);
+//        List<Security> securityList = tableUtils.getListSecuritires(file_securities);
+//        List<History> historyList = tableUtils.getListHistory(file_history);
 
-        testReadXML(securityList, historyList);
-        testCRUD(securityList, historyList);
+//        testReadXML(securityList, historyList);
+//        testCRUD(securityList, historyList);
 
-        tableUtils.printTable(file_securities, file_history, SortBy.EMITENT_TITLE, filter);
+
+        tableUtils.printTable(file_securities, file_history, sort, filter);
     }
 
     private static void testCRUD(List<Security> securities, List<History> histories) {
