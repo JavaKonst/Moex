@@ -12,34 +12,20 @@ import java.util.GregorianCalendar;
 import java.util.List;
 
 public class Main {
-    private static String file_securities = "securitiesShort.xml";
-    private static String file_history = "history.xml";
-    
+
     public static void main(String[] args) {
-//        XMLProcessor_v1 xmlPS = new XMLProcStAX_v1<>(new Security());
-//        List<Security> securities = xmlPS.dataFromXml(file_securities);
-//        XMLProcessor_v1 xmlPH = new XMLProcStAX_v1<>(new History());
-//        List<History> histories = xmlPH.dataFromXml(file_history);
-
-
-//        XMLProcessor_v2 xmlPS2 = new XMLProcStAX_v2();
-//        List<Security> securityList2 = xmlPS2.dataFromXML(file_securities,new Security());
-//        XMLProcessor_v2 xmlPH2 = new XMLProcStAX_v2();
-//        List<History> historyList2 = xmlPH2.dataFromXML(file_history, new History());
-
-
-//        testReadXML(securities, histories);
-//        testCRUD (securities, histories);
-//        testReadXML(securityList2, historyList2);
-//        testCRUD (securityList2, historyList2);
-
-
+        String file_securities = "securitiesShort.xml";
+        String file_history = "history.xml";
         String filter = "";
+
         TableUtils tableUtils = new TableUtils();
-        tableUtils.getListSecuritires(file_securities);
+        List<Security> securityList = tableUtils.getListSecuritires(file_securities);
+        List<History> historyList = tableUtils.getListHistory(file_history);
+
+        testReadXML(securityList, historyList);
+        testCRUD(securityList, historyList);
+
         tableUtils.printTable(file_securities, file_history, SortBy.EMITENT_TITLE, filter);
-
-
     }
 
     private static void testCRUD(List<Security> securities, List<History> histories) {
