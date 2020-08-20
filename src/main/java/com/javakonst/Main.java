@@ -5,12 +5,10 @@ import com.javakonst.dao.HistoryDAO;
 import com.javakonst.dao.SecuritiesDAO;
 import com.javakonst.entity.History;
 import com.javakonst.entity.Security;
-import com.javakonst.xmlparsers.XMLProcStAX_v1;
-import com.javakonst.xmlparsers.XMLProcStAX_v2;
-import com.javakonst.xmlparsers.XMLProcessor_v2;
-import com.javakonst.xmlparsers.XMLProcessor_v1;
+import com.javakonst.utils.SortBy;
+import com.javakonst.utils.TableUtils;
 
-import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 public class Main {
@@ -18,25 +16,29 @@ public class Main {
     private static String file_history = "history.xml";
     
     public static void main(String[] args) {
-        XMLProcessor_v1 xmlPS = new XMLProcStAX_v1<>(new Security());
-        List<Security> securities = xmlPS.dataFromXml(file_securities);
-
-        XMLProcessor_v1 xmlPH = new XMLProcStAX_v1<>(new History());
-        List<History> histories = xmlPH.dataFromXml(file_history);
-
+//        XMLProcessor_v1 xmlPS = new XMLProcStAX_v1<>(new Security());
+//        List<Security> securities = xmlPS.dataFromXml(file_securities);
+//        XMLProcessor_v1 xmlPH = new XMLProcStAX_v1<>(new History());
+//        List<History> histories = xmlPH.dataFromXml(file_history);
 
 
-        XMLProcessor_v2 xmlPS2 = new XMLProcStAX_v2();
-        List<Security> securityList2 = xmlPS2.dataFromXML(file_securities,new Security());
+//        XMLProcessor_v2 xmlPS2 = new XMLProcStAX_v2();
+//        List<Security> securityList2 = xmlPS2.dataFromXML(file_securities,new Security());
+//        XMLProcessor_v2 xmlPH2 = new XMLProcStAX_v2();
+//        List<History> historyList2 = xmlPH2.dataFromXML(file_history, new History());
 
-        XMLProcessor_v2 xmlPH2 = new XMLProcStAX_v2();
-        List<History> historyList2 = xmlPH2.dataFromXML(file_history, new History());
+
+//        testReadXML(securities, histories);
+//        testCRUD (securities, histories);
+//        testReadXML(securityList2, historyList2);
+//        testCRUD (securityList2, historyList2);
 
 
-        testReadXML(securities, histories);
-        testCRUD (securities, histories);
-        testReadXML(securityList2, historyList2);
-        testCRUD (securityList2, historyList2);
+        String filter = "";
+        TableUtils tableUtils = new TableUtils();
+        tableUtils.getListSecuritires(file_securities);
+        tableUtils.printTable(file_securities, file_history, SortBy.EMITENT_TITLE, filter);
+
 
     }
 
@@ -58,8 +60,8 @@ public class Main {
         historyNew.setClose(99.9);
         historyNew.setOpen(222.2);
         historyNew.setNumtrades(66.6);
-        historyNew.setTradedate(new Date());
-        h.entityCreate(historyNew,histories);
+        historyNew.setTradedate(new GregorianCalendar(2020, 10, 23).getTime());
+        h.entityCreate(historyNew, histories);
 
         //тест securityRead
         System.out.print("1-Tест securityRead: \t");
