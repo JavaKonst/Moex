@@ -14,24 +14,7 @@ import java.util.List;
 public class Main {
 
     public static void main(String[] args) {
-        String file_securities = "securitiesShort.xml";
-        String file_history = "history.xml";
-        String filter = "tradedate=2010";
-        SortBy sort = SortBy.OPEN;
-
-        //Создание инструмента
-        TableUtils tableUtils = new TableUtils();
-
-        //Получение списков из файлов (ценные бумаги и история торгов)
-        List<Security> securityList = tableUtils.getListSecuritires(file_securities);
-        List<History> historyList = tableUtils.getListHistory(file_history);
-
-//        testReadXML(securityList, historyList);
-//        testCRUD(securityList, historyList);
-
-        //Вывод таблицы с заданными, техзаданием, столбцами с возможностью сортировки по любым столбцам,
-        //а также фильтр по столбцам EMITENT_TITLE и TRADEDATE
-        tableUtils.printTable(file_securities, file_history, sort, filter);
+//        runTestReadCreate();
     }
 
     private static void testCRUD(List<Security> securities, List<History> histories) {
@@ -85,10 +68,31 @@ public class Main {
     }
 
     private static void testReadXML(List<Security> securities, List<History> histories) {
-        System.out.println("Найдено ценных бумаг "+securities.size()+" записей.");
+        System.out.println("Найдено ценных бумаг " + securities.size() + " записей.");
 //        securities.stream().forEachOrdered(e -> System.out.println(e.getSecid()));
 
-        System.out.println("Найдено истории торгов "+histories.size()+" записей.");
+        System.out.println("Найдено истории торгов " + histories.size() + " записей.");
 //        histories.stream().forEachOrdered(e -> System.out.println(e.getNumtrades()));
+    }
+
+    private static void runTestReadCreate() {
+        String file_securities = "securitiesShort.xml";
+        String file_history = "history.xml";
+        String filter = "tradedate=2010";
+        SortBy sort = SortBy.OPEN;
+
+        //Создание инструмента
+        TableUtils tableUtils = new TableUtils();
+
+        //Получение списков из файлов (ценные бумаги и история торгов)
+        List<Security> securityList = tableUtils.getListSecuritires(file_securities);
+        List<History> historyList = tableUtils.getListHistory(file_history);
+
+//        testReadXML(securityList, historyList);
+//        testCRUD(securityList, historyList);
+
+        //Вывод таблицы с заданными, техзаданием, столбцами с возможностью сортировки по любым столбцам,
+        //а также фильтр по столбцам EMITENT_TITLE и TRADEDATE
+        tableUtils.printTable(file_securities, file_history, sort, filter);
     }
 }
