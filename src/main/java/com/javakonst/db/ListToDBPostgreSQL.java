@@ -9,7 +9,7 @@ import java.util.List;
 
 public class ListToDBPostgreSQL implements ListToDB {
 
-    public void downloadListDB(List<Entity> entityList) {
+    public void uploadListToDB(List<Entity> entityList) {
         Session session = HibernateUtils.getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
 
@@ -17,6 +17,10 @@ public class ListToDBPostgreSQL implements ListToDB {
             session.save(entity);
             transaction.commit();
         }
+
+        session.close();
     }
+
+
 
 }
