@@ -7,10 +7,10 @@ import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 
-public class HibernateUtils {
+public class HibernateConf {
     private static SessionFactory sessionFactory;
 
-    private HibernateUtils() {
+    private HibernateConf() {
     }
 
     @SneakyThrows

@@ -3,10 +3,12 @@ package com.javakonst;
 import com.javakonst.dao.CRUDService;
 import com.javakonst.dao.HistoryDAO;
 import com.javakonst.dao.SecuritiesDAO;
+import com.javakonst.db.DBService;
+import com.javakonst.db.DBServiceDAO;
 import com.javakonst.entity.History;
 import com.javakonst.entity.Security;
 import com.javakonst.utils.SortBy;
-import com.javakonst.utils.TableUtils;
+import com.javakonst.utils.WorkWithListsUtils;
 
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -14,7 +16,9 @@ import java.util.List;
 public class Main {
 
     public static void main(String[] args) {
-//        runTestReadCreate();
+        runTestReadCreate();
+
+
     }
 
     private static void testCRUD(List<Security> securities, List<History> histories) {
@@ -78,21 +82,43 @@ public class Main {
     private static void runTestReadCreate() {
         String file_securities = "securitiesShort.xml";
         String file_history = "history.xml";
+        String secid = "AQUA";
         String filter = "tradedate=2010";
         SortBy sort = SortBy.OPEN;
 
         //Создание инструмента
-        TableUtils tableUtils = new TableUtils();
+        WorkWithListsUtils workWithListsUtils = new WorkWithListsUtils();
 
         //Получение списков из файлов (ценные бумаги и история торгов)
-        List<Security> securityList = tableUtils.getListSecuritires(file_securities);
-        List<History> historyList = tableUtils.getListHistory(file_history);
+        List<Security> securityList = workWithListsUtils.getListSecuritires(file_securities);
+        List<History> historyList = workWithListsUtils.getListHistory(file_history);
 
 //        testReadXML(securityList, historyList);
 //        testCRUD(securityList, historyList);
 
         //Вывод таблицы с заданными, техзаданием, столбцами с возможностью сортировки по любым столбцам,
         //а также фильтр по столбцам EMITENT_TITLE и TRADEDATE
-        tableUtils.printTable(file_securities, file_history, sort, filter);
+        workWithListsUtils.printTable(file_securities, file_history, sort, filter);
+
+
+        /*Проверка работы с БД*/
+        //Сохранение списков ценных бумаг и их истории в БД
+        DBService dbService = new DBServiceDAO();
+        dbService.saveListsToDB(securityList, historyList);
+        //Выгрузка списка всех бумаг
+        List<Security> allSecurities = dbService.getAllSecurities();
+        allSecurities.forEach(System.out::println);
+        //Нахождение бумаги по полю secid
+        Security securityBySecid = dbService.getSecurityBySecid(secid);
+        System.out.println(securityBySecid.toString());
+        //Удаление бумаги со связанной сней историей
+        dbService.deleteSecurity(secid);
+        allSecurities = dbService.getAllSecurities();
+        allSecurities.forEach(System.out::println);
+        //Сохранение бумаги
+        //securityBySecid.setHistory(null); //без истории
+        dbService.saveSecurity(securityBySecid);
+        allSecurities = dbService.getAllSecurities();
+        allSecurities.forEach(System.out::println);
     }
 }

@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class TableUtils {
+public class WorkWithListsUtils {
     private final String[] columnNames = {"SECID ", "REGNUMBER ", "NAME ", "EMITENT_TITLE ", "TRADEDATE ", "NUMTRADES ", "OPEN ", "CLOSE "};
     private List<Security> securityList;
     private List<History> historyList;
