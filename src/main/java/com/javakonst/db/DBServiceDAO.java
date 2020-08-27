@@ -13,26 +13,27 @@ public class DBServiceDAO implements DBService {
 
     @Override
     public int[] saveListsToDB(List<Security> sList, List<History> hList) {
+        Session session = HibernateConf.getSessionFactory().openSession();
+        Transaction transaction = session.beginTransaction();
 
-        //TODO: сделать сохранение пачкой
-        for (Security s : sList) {
-            Session session = HibernateConf.getSessionFactory().openSession();
-            Transaction transaction = session.beginTransaction();
-            session.save(s);
-            transaction.commit();
-            session.close();
+        for (int i = 0; i < sList.size(); i++) {
+            session.save(sList.get(i));
+            if (i % 10 == 0) {
+                session.flush();
+                session.clear();
+            }
         }
-
         int countSavedSecurities = sList.size();
 
-        for (History h : hList) {
-            Session session = HibernateConf.getSessionFactory().openSession();
-            Transaction transaction = session.beginTransaction();
-            session.save(h);
-            transaction.commit();
-            session.close();
+        for (int i = 0; i < hList.size(); i++) {
+            session.save(hList.get(i));
+            if (i % 10 == 0) {
+                session.flush();
+                session.clear();
+            }
         }
-
+        transaction.commit();
+        session.close();
         int countSavedHistory = hList.size();
 
         int[] a = new int[2];
