@@ -17,15 +17,19 @@ public class XMLProcStAX implements XMLProcessor {
     private boolean isStop;
 
     @Override
-    @SneakyThrows
     public <T> List<T> dataFromXML(String filePath, T entity) {
         List<T> entityList = new ArrayList<>();
         isStop = false;
-        streamXMLData = XMLInputFactory.newInstance().createXMLStreamReader(filePath, new FileInputStream(filePath));
-        while (streamXMLData.hasNext() && !isStop) {
-            streamXMLData.next();
-            if (streamXMLData.isStartElement()) handleEventStartElement(entityList, entity);
-            if (streamXMLData.isEndElement()) handleEventEndElement();
+
+        try {
+            streamXMLData = XMLInputFactory.newInstance().createXMLStreamReader(filePath, new FileInputStream(filePath));
+            while (streamXMLData.hasNext() && !isStop) {
+                streamXMLData.next();
+                if (streamXMLData.isStartElement()) handleEventStartElement(entityList, entity);
+                if (streamXMLData.isEndElement()) handleEventEndElement();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return entityList;
     }

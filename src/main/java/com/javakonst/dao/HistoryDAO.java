@@ -1,7 +1,7 @@
 package com.javakonst.dao;
 
 import com.javakonst.entity.History;
-import com.sun.istack.internal.Nullable;
+import com.sun.istack.Nullable;
 
 import java.util.List;
 

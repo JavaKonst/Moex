@@ -1,7 +1,7 @@
 package com.javakonst.dao;
 
 import com.javakonst.entity.Security;
-import com.sun.istack.internal.Nullable;
+import com.sun.istack.Nullable;
 
 import java.util.List;
 import java.util.regex.Matcher;

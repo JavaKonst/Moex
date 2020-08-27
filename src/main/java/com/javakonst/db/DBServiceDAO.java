@@ -12,35 +12,49 @@ import java.util.List;
 public class DBServiceDAO implements DBService {
 
     @Override
-    public void saveListsToDB(List<Security> sList, List<History> hList) {
-        Session session = HibernateConf.getSessionFactory().openSession();
-        Transaction transaction = session.beginTransaction();
+    public int[] saveListsToDB(List<Security> sList, List<History> hList) {
 
+        //TODO: сделать сохранение пачкой
         for (Security s : sList) {
+            Session session = HibernateConf.getSessionFactory().openSession();
+            Transaction transaction = session.beginTransaction();
             session.save(s);
             transaction.commit();
+            session.close();
         }
+
+        int countSavedSecurities = sList.size();
 
         for (History h : hList) {
+            Session session = HibernateConf.getSessionFactory().openSession();
+            Transaction transaction = session.beginTransaction();
             session.save(h);
             transaction.commit();
+            session.close();
         }
 
-        session.close();
+        int countSavedHistory = hList.size();
+
+        int[] a = new int[2];
+        a[0] = countSavedSecurities;
+        a[1] = countSavedHistory;
+
+        return a;
     }
 
     @Override
-    public void saveSecurity(Security s) {
+    public int saveSecurity(Security s) {
         Session session = HibernateConf.getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
-        session.save(s);
+        int underId = (int) session.save(s);
         transaction.commit();
         session.close();
+        return underId;
     }
 
     @Override
-    public void deleteSecurity(String secid) {
-        if (secid.trim().isEmpty()) return;
+    public int deleteSecurity(String secid) {
+        if (secid.trim().isEmpty()) return 0;
         Security currentSecurity = getSecurityBySecid(secid);
         if (currentSecurity != null) {
             Session session = HibernateConf.getSessionFactory().openSession();
@@ -48,7 +62,9 @@ public class DBServiceDAO implements DBService {
             session.delete(currentSecurity);
             transaction.commit();
             session.close();
+            return 1;
         }
+        return 0;
     }
 
     @Override

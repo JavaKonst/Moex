@@ -102,23 +102,30 @@ public class Main {
 
 
         /*Проверка работы с БД*/
+        System.out.println("\n\n\n----------Проверка работы БД:");
         //Сохранение списков ценных бумаг и их истории в БД
+        System.out.print("\n\n\nЭтап 1 (сохранение в базу): ");
         DBService dbService = new DBServiceDAO();
-        dbService.saveListsToDB(securityList, historyList);
+        int[] a = dbService.saveListsToDB(securityList, historyList);
+        System.out.println("-OK- s=" + a[0] + " h=" + a[1]);
         //Выгрузка списка всех бумаг
+        System.out.println("\n\n\nЭтап 2 (чтение базы): ");
         List<Security> allSecurities = dbService.getAllSecurities();
         allSecurities.forEach(System.out::println);
         //Нахождение бумаги по полю secid
+        System.out.println("\n\n\nЭтап 3 (чтение бумаги из базы): ");
         Security securityBySecid = dbService.getSecurityBySecid(secid);
         System.out.println(securityBySecid.toString());
         //Удаление бумаги со связанной сней историей
+        System.out.println("\n\n\nЭтап 4 (удаление бумаги из базы): ");
         dbService.deleteSecurity(secid);
-        allSecurities = dbService.getAllSecurities();
-        allSecurities.forEach(System.out::println);
+        Security securityBySecid2 = dbService.getSecurityBySecid(secid);
+        System.out.println(securityBySecid2 == null ? "бумага удалена" : securityBySecid2.toString());
         //Сохранение бумаги
         //securityBySecid.setHistory(null); //без истории
-        dbService.saveSecurity(securityBySecid);
-        allSecurities = dbService.getAllSecurities();
-        allSecurities.forEach(System.out::println);
+        System.out.println("\n\n\nЭтап 5 (сохранение бумаги в базу): ");
+        System.out.println(dbService.saveSecurity(securityBySecid));
+        Security securityBySecid3 = dbService.getSecurityBySecid(secid);
+        System.out.println(securityBySecid3 == null ? "не удалось сохранить" : securityBySecid3.toString());
     }
 }

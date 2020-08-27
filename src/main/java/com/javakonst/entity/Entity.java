@@ -1,8 +1,13 @@
 package com.javakonst.entity;
 
-import lombok.Data;
-
-@Data
 public class Entity {
-    private String secid;
+//    private String secid;
+//
+//    public String getSecid() {
+//        return secid;
+//    }
+//
+//    public void setSecid(String secid) {
+//        this.secid = secid;
+//    }
 }
