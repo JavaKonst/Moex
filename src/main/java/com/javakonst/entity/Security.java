@@ -1,12 +1,11 @@
 package com.javakonst.entity;
 
 import javax.persistence.*;
-
+import java.util.List;
 
 @javax.persistence.Entity
 @Table(name = "securities")
 public class Security extends Entity {
-
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,6 +22,9 @@ public class Security extends Entity {
 
     @Column
     private String regnumber;
+
+    @OneToMany(mappedBy = "security", fetch = FetchType.EAGER)
+    private List<History> historyList;
 
     //TODO: добавить связанный объект History
 
@@ -62,6 +64,14 @@ public class Security extends Entity {
         this.regnumber = regnumber;
     }
 
+    public List<History> getHistoryList() {
+        return historyList;
+    }
+
+    public void setHistoryList(List<History> historyList) {
+        this.historyList = historyList;
+    }
+
     @Override
     public String toString() {
         return "Security{" +
@@ -70,6 +80,7 @@ public class Security extends Entity {
                 ", name='" + name + '\'' +
                 ", emitent_title='" + emitent_title + '\'' +
                 ", regnumber='" + regnumber + '\'' +
+                ", historyList=" + historyList +
                 '}';
     }
 }

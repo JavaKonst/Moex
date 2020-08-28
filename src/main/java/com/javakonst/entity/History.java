@@ -12,8 +12,9 @@ public class History extends Entity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column
-    private String secid;
+    @ManyToOne(optional = true, cascade = CascadeType.ALL)
+    @JoinColumn(name = "secid")
+    private Security security;
 
     @Column
     private Date tradedate;
@@ -29,14 +30,6 @@ public class History extends Entity {
 
     public int getId() {
         return id;
-    }
-
-    public String getSecid() {
-        return secid;
-    }
-
-    public void setSecid(String secid) {
-        this.secid = secid;
     }
 
     public Date getTradedate() {
@@ -71,16 +64,25 @@ public class History extends Entity {
         this.close = close;
     }
 
+    public Security getSecurity() {
+        return security;
+    }
+
+    public void setSecurity(Security security) {
+        this.security = security;
+    }
+
     @Override
     public String toString() {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         return "History{" +
                 "id=" + id +
-                ", secid='" + secid + '\'' +
+                ", security=" + security.toString() +
                 ", tradedate=" + dateFormat.format(tradedate) +
                 ", numtrades=" + numtrades +
                 ", open=" + open +
                 ", close=" + close +
                 '}';
     }
+
 }

@@ -13,7 +13,7 @@ public class HistoryDAO implements CRUDService<History> {
 
     @Override
     public void entityDelete(String secid, List<History> entityList) {
-        entityList.removeIf(s -> s.getSecid().equals(secid));
+        entityList.removeIf(s -> s.getSecurity().getSecid().equals(secid));
     }
 
     @Override
@@ -21,7 +21,7 @@ public class HistoryDAO implements CRUDService<History> {
     public History entityRead(String secid, List<History> entityList) {
         if (entityList.isEmpty()) throw new RuntimeException("-> Error: input List is Empty.");
         for (History s : entityList) {
-            if (s.getSecid().equals(secid)) return s;
+            if (s.getSecurity().getSecid().equals(secid)) return s;
         }
         return null;
     }
@@ -29,7 +29,7 @@ public class HistoryDAO implements CRUDService<History> {
     @Override
     public void entityUpdate(History entity, List<History> entityList) {
         for (int i = 0; i < entityList.size(); i++) {
-            if (entityList.get(i).equals(entity.getSecid())) {
+            if (entityList.get(i).equals(entity.getSecurity().getSecid())) {
                 entityList.set(i, entity);
                 break;
             }

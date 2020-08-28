@@ -26,10 +26,19 @@ public class DBServiceDAO implements DBService {
         int countSavedSecurities = sList.size();
 
         for (int i = 0; i < hList.size(); i++) {
-            session.save(hList.get(i));
-            if (i % 10 == 0) {
-                session.flush();
-                session.clear();
+            String secid = hList.get(i).getSecurity().getSecid();
+            Security security = null;
+            for (Security s : sList) {
+                if (s.getSecid().equals(secid)) security = s;
+            }
+            if (security != null) {
+                History history = hList.get(i);
+                history.setSecurity(security);
+                session.save(history);
+                if (i % 10 == 0) {
+                    session.flush();
+                    session.clear();
+                }
             }
         }
         transaction.commit();

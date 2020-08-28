@@ -59,7 +59,9 @@ public class XMLProcStAX implements XMLProcessor {
                 newHistory.setTradedate(date.getTime());
 
                 value = streamXMLData.getAttributeValue(3);
-                newHistory.setSecid(value);
+                Security security = new Security();
+                security.setSecid(value);
+                newHistory.setSecurity(security);
 
                 value = streamXMLData.getAttributeValue(4);
                 newHistory.setNumtrades(Double.parseDouble(value.isEmpty() ? "0.0" : value));
@@ -68,7 +70,7 @@ public class XMLProcStAX implements XMLProcessor {
                 newHistory.setOpen(Double.parseDouble(value.isEmpty() ? "0.0" : value));
 
                 value = streamXMLData.getAttributeValue(11);
-                newHistory.setClose(Double.parseDouble(value.isEmpty() ? "0.0": value));
+                newHistory.setClose(Double.parseDouble(value.isEmpty() ? "0.0" : value));
 
                 entityList.add((T) newHistory);
             }
