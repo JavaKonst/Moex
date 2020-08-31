@@ -8,7 +8,7 @@ import java.util.List;
 public interface DBService {
     int[] saveListsToDB(List<Security> sList, List<History> hList);
 
-    int saveSecurity(Security s);
+    String saveSecurity(Security s);
 
     int deleteSecurity(String secid);
 

@@ -1,4 +1,5 @@
 plugins {
+    id 'io.franzbecker.gradle-lombok' version '1.14'
     id 'java'
 }
 
@@ -12,10 +13,15 @@ repositories {
 }
 
 dependencies {
-    compileOnly 'org.projectlombok:lombok:1.18.12'
-    annotationProcessor 'org.projectlombok:lombok:1.18.12'
+//    compileOnly 'org.projectlombok:lombok:1.18.12'
+//    annotationProcessor 'org.projectlombok:lombok:1.18.12'
     compile group: 'com.massisframework', name: 'j-text-utils', version: '0.3.4'
     compile group: 'org.hibernate', name: 'hibernate-core', version: '5.4.20.Final'
     compile group: 'org.postgresql', name: 'postgresql', version: '42.2.16'
 
+}
+
+lombok {
+    version = '1.18.4'
+    sha256 = ""
 }

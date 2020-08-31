@@ -53,15 +53,15 @@ public class DBServiceDAO implements DBService {
     }
 
     @Override
-    public int saveSecurity(Security s) {
+    public String saveSecurity(Security s) {
         Session session = HibernateConf.getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
-        int underId = (int) session.save(s);
+        String underSecid = (String) session.save(s);
         transaction.commit();
         session.close();
-        return underId;
+        return underSecid;
     }
-
+    
     @Override
     public int deleteSecurity(String secid) {
         if (secid.trim().isEmpty()) return 0;
@@ -76,7 +76,7 @@ public class DBServiceDAO implements DBService {
         }
         return 0;
     }
-
+    
     @Override
     public List<Security> getAllSecurities() {
         Session session = HibernateConf.getSessionFactory().openSession();
@@ -87,7 +87,7 @@ public class DBServiceDAO implements DBService {
         session.close();
         return securityList;
     }
-
+    
     @Override
     public Security getSecurityBySecid(String secid) {
         Session session = HibernateConf.getSessionFactory().openSession();
@@ -95,6 +95,8 @@ public class DBServiceDAO implements DBService {
         Query query = session.createQuery("FROM Security WHERE secid = :a");
         query.setParameter("a", secid);
         List<Security> resultList = query.getResultList();
+        transaction.commit();
+        session.close();
         //TODO: сделать запрос в moex на нужную ценную бумагу
         if (resultList.isEmpty()) return null;
         else {

@@ -1,5 +1,8 @@
 package com.javakonst.entity;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -7,82 +10,51 @@ import java.util.Date;
 @javax.persistence.Entity
 @Table(name = "history")
 public class History extends Entity {
-
+    
+    @Getter
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-
+    
+    @Getter
+    @Setter
     @ManyToOne(optional = true, cascade = CascadeType.ALL)
     @JoinColumn(name = "secid")
     private Security security;
-
+    
+    @Getter
+    @Setter
     @Column
     private Date tradedate;
-
+    
+    @Getter
+    @Setter
     @Column
     private Double numtrades;
-
+    
+    @Getter
+    @Setter
     @Column
     private Double open;
-
+    
+    @Getter
+    @Setter
     @Column
     private Double close;
 
-    public int getId() {
-        return id;
-    }
-
-    public Date getTradedate() {
-        return tradedate;
-    }
-
-    public void setTradedate(Date tradedate) {
-        this.tradedate = tradedate;
-    }
-
-    public Double getNumtrades() {
-        return numtrades;
-    }
-
-    public void setNumtrades(Double numtrades) {
-        this.numtrades = numtrades;
-    }
-
-    public Double getOpen() {
-        return open;
-    }
-
-    public void setOpen(Double open) {
-        this.open = open;
-    }
-
-    public Double getClose() {
-        return close;
-    }
-
-    public void setClose(Double close) {
-        this.close = close;
-    }
-
-    public Security getSecurity() {
-        return security;
-    }
-
-    public void setSecurity(Security security) {
-        this.security = security;
-    }
-
+//    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+//    ", tradedate=" + dateFormat.format(tradedate) +
+    
     @Override
     public String toString() {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         return "History{" +
                 "id=" + id +
-                ", security=" + security.toString() +
+                ", security=" + security.getSecid() +
                 ", tradedate=" + dateFormat.format(tradedate) +
                 ", numtrades=" + numtrades +
                 ", open=" + open +
                 ", close=" + close +
                 '}';
     }
-
 }

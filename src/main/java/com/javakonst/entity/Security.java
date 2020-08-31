@@ -1,86 +1,49 @@
 package com.javakonst.entity;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.util.List;
 
 @javax.persistence.Entity
 @Table(name = "securities")
 public class Security extends Entity {
-
+    
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-
-    @Column
+    @Getter
+    @Setter
     private String secid;
-
+    
     @Column
+    @Getter
+    @Setter
     private String name;
-
+    
     @Column
+    @Getter
+    @Setter
     private String emitent_title;
-
+    
     @Column
+    @Getter
+    @Setter
     private String regnumber;
-
-    @OneToMany(mappedBy = "security", fetch = FetchType.EAGER)
+    
+    @Getter
+    @Setter
+    @OneToMany(mappedBy = "security", fetch = FetchType.EAGER, orphanRemoval = true, cascade = CascadeType.ALL)
     private List<History> historyList;
-
-    //TODO: добавить связанный объект History
-
-    public int getId() {
-        return id;
-    }
-
-    public String getSecid() {
-        return secid;
-    }
-
-    public void setSecid(String secid) {
-        this.secid = secid;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getEmitent_title() {
-        return emitent_title;
-    }
-
-    public void setEmitent_title(String emitent_title) {
-        this.emitent_title = emitent_title;
-    }
-
-    public String getRegnumber() {
-        return regnumber;
-    }
-
-    public void setRegnumber(String regnumber) {
-        this.regnumber = regnumber;
-    }
-
-    public List<History> getHistoryList() {
-        return historyList;
-    }
-
-    public void setHistoryList(List<History> historyList) {
-        this.historyList = historyList;
-    }
-
+    
     @Override
     public String toString() {
+        String string = historyList == null ? "null" : String.valueOf(historyList.size());
         return "Security{" +
-                "id=" + id +
-                ", secid='" + secid + '\'' +
+                "secid='" + secid + '\'' +
                 ", name='" + name + '\'' +
                 ", emitent_title='" + emitent_title + '\'' +
                 ", regnumber='" + regnumber + '\'' +
-                ", historyList=" + historyList +
+                ", historyList=" + string +
                 '}';
     }
 }
