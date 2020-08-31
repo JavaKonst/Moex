@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class WorkWithListsUtils {
+public class ListUtils {
     private final String[] columnNames = {"SECID ", "REGNUMBER ", "NAME ", "EMITENT_TITLE ", "TRADEDATE ", "NUMTRADES ", "OPEN ", "CLOSE "};
     private List<Security> securityList;
     private List<History> historyList;
@@ -83,5 +83,4 @@ public class WorkWithListsUtils {
         if (sort != null) tt.setSort(sort.getValue());
         tt.printTable();
     }
-
 }

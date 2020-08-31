@@ -12,7 +12,6 @@ public class HibernateConf {
     private HibernateConf() {
     }
 
-
     public static SessionFactory getSessionFactory() {
         try {
             if (sessionFactory == null) {

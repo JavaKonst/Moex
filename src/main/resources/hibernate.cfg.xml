@@ -5,12 +5,22 @@
 
 <hibernate-configuration>
     <session-factory>
+        <!--        <property name="hibernate.connection.driver_class">org.postgresql.Driver</property>-->
+        <!--        <property name="hibernate.connection.url">jdbc:postgresql://localhost:5432/postgres</property>-->
+        <!--        <property name="hibernate.connection.password">admin</property>-->
+        <!--        <property name="hibernate.connection.username">postgres</property>-->
+        <!--        <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQL10Dialect</property>-->
+        <!--        <property name="show_sql">false</property>-->
+
         <property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
-        <property name="hibernate.connection.url">jdbc:postgresql://localhost:5432/postgres</property>
-        <property name="hibernate.connection.password">admin</property>
-        <property name="hibernate.connection.username">postgres</property>
-        <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQL10Dialect</property>
+        <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/dbForMoex</property>
+        <property name="hibernate.connection.password">javauser</property>
+        <property name="hibernate.connection.username">javauser</property>
+        <property name="hibernate.dialect">org.hibernate.dialect.MySQL8Dialect</property>
         <property name="show_sql">false</property>
-<!--        <property name="hibernate.hbm2ddl.auto">create</property>-->
+
+
+        <!--        <property name="hibernate.hbm2ddl.auto">create</property>-->
     </session-factory>
 </hibernate-configuration>

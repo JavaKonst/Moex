@@ -9,6 +9,8 @@ import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class DBServiceDAO implements DBService {
 
@@ -66,7 +68,7 @@ public class DBServiceDAO implements DBService {
     @Override
     @Nullable
     public String saveSecurity(Security security) {
-        if (security == null) return null;
+        if (security == null || !validate(security)) return null;
         Session session = HibernateConf.getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
         String underSecid = (String) session.save(security);
@@ -137,7 +139,7 @@ public class DBServiceDAO implements DBService {
 
     @Override
     public boolean updateSecurity(Security security) {
-        if (security == null) return false;
+        if (security == null || !validate(security)) return false;
         Session session = HibernateConf.getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
 
@@ -159,5 +161,13 @@ public class DBServiceDAO implements DBService {
         session.close();
 
         return true;
+    }
+
+    private boolean validate(Security security) {
+        String pattern = "^[ а-яА-Я0-9]+$";
+        Pattern p = Pattern.compile(pattern);
+        Matcher m = p.matcher(security.getName());
+        if (!m.matches()) return false;
+        else return true;
     }
 }
