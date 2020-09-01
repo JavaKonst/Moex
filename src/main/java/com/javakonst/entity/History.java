@@ -54,4 +54,28 @@ public class History extends Entity {
                 ", close=" + close +
                 '}';
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        History history = (History) o;
+
+        if (!security.equals(history.security)) return false;
+        if (!tradedate.equals(history.tradedate)) return false;
+        if (!numtrades.equals(history.numtrades)) return false;
+        if (!open.equals(history.open)) return false;
+        return close.equals(history.close);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = security.hashCode();
+        result = 31 * result + tradedate.hashCode();
+        result = 31 * result + numtrades.hashCode();
+        result = 31 * result + open.hashCode();
+        result = 31 * result + close.hashCode();
+        return result;
+    }
 }

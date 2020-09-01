@@ -7,31 +7,41 @@ import lombok.SneakyThrows;
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamReader;
 import java.io.FileInputStream;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.List;
+import java.util.*;
 
 public class XMLProcStAX implements XMLProcessor {
     private XMLStreamReader streamXMLData;
     private boolean isStop;
 
     @Override
+    @SneakyThrows
     public <T> List<T> dataFromXML(String filePath, T entity) {
         List<T> entityList = new ArrayList<>();
         isStop = false;
 
-        try {
-            streamXMLData = XMLInputFactory.newInstance().createXMLStreamReader(filePath, new FileInputStream(filePath));
-            while (streamXMLData.hasNext() && !isStop) {
-                streamXMLData.next();
-                if (streamXMLData.isStartElement()) handleEventStartElement(entityList, entity);
-                if (streamXMLData.isEndElement()) handleEventEndElement();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+        streamXMLData = XMLInputFactory.newInstance().createXMLStreamReader(filePath, new FileInputStream(filePath));
+        while (streamXMLData.hasNext() && !isStop) {
+            streamXMLData.next();
+            if (streamXMLData.isStartElement()) handleEventStartElement(entityList, entity);
+            if (streamXMLData.isEndElement()) handleEventEndElement();
         }
-        return entityList;
+        Set<T> setEntity = new HashSet<>(entityList);
+        List<T> listEntity = new ArrayList<>(setEntity);
+        listEntity.sort((t1, t2) -> {
+            if (t1 instanceof Security){
+                Security security1 = (Security) t1;
+                Security security2 = (Security) t2;
+                return security1.getSecid().compareTo(security2.getSecid());
+            }
+            if (t1 instanceof History){
+                History history1 = (History) t1;
+                History history2 = (History) t2;
+                return history1.getSecurity().getSecid().compareTo(history2.getSecurity().getSecid());
+            }
+            return 0;
+        });
+
+        return listEntity;
     }
 
     @SneakyThrows
@@ -48,9 +58,6 @@ public class XMLProcStAX implements XMLProcessor {
                 String value;
                 History newHistory = new History();
 
-                //TODO: сделать проверку значения поля на пустоту ""/null
-//                value = streamXMLData.getAttributeValue(1);
-//                newHistory.setTradedate(new SimpleDateFormat("yyyy-MM-dd").parse(value));
                 String[] dateString = streamXMLData.getAttributeValue(1).split("-");
                 int year = Integer.parseInt(dateString[0]);
                 int month = Integer.parseInt(dateString[1]);

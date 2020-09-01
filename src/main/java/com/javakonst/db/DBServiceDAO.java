@@ -16,15 +16,14 @@ public class DBServiceDAO implements DBService {
 
     @Override
     public int[] saveListsToDB(List<Security> sList, List<History> hList) {
-        int[] a = {0, 0};
+        int[] countOfSavedData = {0, 0};
         int countSavedSecurities = 0;
         int countSavedHistory = 0;
 
         Session session = HibernateConf.getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
 
-        if (sList == null || sList.isEmpty()) a[0] = countSavedSecurities;
-        else {
+        if (sList != null && !sList.isEmpty()) {
             for (int i = 0; i < sList.size(); i++) {
                 session.save(sList.get(i));
                 if (i % 10 == 0) {
@@ -35,8 +34,7 @@ public class DBServiceDAO implements DBService {
             countSavedSecurities = sList.size();
         }
 
-        if (hList == null || hList.isEmpty()) a[1] = countSavedHistory;
-        else {
+        if (hList != null && !hList.isEmpty() && sList != null && !sList.isEmpty()) {
             for (int i = 0; i < hList.size(); i++) {
                 String secid = hList.get(i).getSecurity().getSecid();
                 Security security = null;
@@ -59,10 +57,10 @@ public class DBServiceDAO implements DBService {
         transaction.commit();
         session.close();
 
-        a[0] = countSavedSecurities;
-        a[1] = countSavedHistory;
+        countOfSavedData[0] = countSavedSecurities;
+        countOfSavedData[1] = countSavedHistory;
 
-        return a;
+        return countOfSavedData;
     }
 
     @Override
@@ -99,11 +97,8 @@ public class DBServiceDAO implements DBService {
         List<Security> resultList = query.getResultList();
         transaction.commit();
         session.close();
-        //TODO: сделать запрос в moex на нужную ценную бумагу
         if (resultList.isEmpty()) return null;
-        else {
-            return resultList.get(0);
-        }
+            else return resultList.get(0);
     }
 
     @Override
@@ -164,10 +159,9 @@ public class DBServiceDAO implements DBService {
     }
 
     private boolean validate(Security security) {
-        String pattern = "^[ а-яА-Я0-9]+$";
+        String pattern = "^[ а-яА-Я0-9]+$"; //Поле NAME должно содержать символы кириллицы/цифры/пробелы
         Pattern p = Pattern.compile(pattern);
         Matcher m = p.matcher(security.getName());
-        if (!m.matches()) return false;
-        else return true;
+        return m.matches();
     }
 }

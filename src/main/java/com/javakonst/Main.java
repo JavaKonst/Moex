@@ -12,18 +12,18 @@ import java.util.Date;
 import java.util.List;
 
 public class Main {
-    private static final String file_securities = "securitiesShort.xml";
+    private static final String file_securities = "securities.xml";
     private static final String file_history = "history.xml";
 
     public static void main(String[] args) {
         //CRUD со списком
-        testListCRUD();
+//        testListCRUD();
 
         //CRUD с БД
-        testDbCRUD();
+//        testDbCRUD();
 
         //Печать таблицы
-        testPrintTable();
+//        testPrintTable();
     }
 
     private static void testPrintTable() {

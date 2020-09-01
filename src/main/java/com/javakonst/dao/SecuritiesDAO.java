@@ -11,8 +11,7 @@ public class SecuritiesDAO implements CRUDService<Security> {
 
     @Override
     public void entityCreate(Security entity, List<Security> entityList) {
-        validate(entity);
-        entityList.add(entity);
+        if (validate(entity)) entityList.add(entity);
     }
 
     @Override
@@ -40,12 +39,11 @@ public class SecuritiesDAO implements CRUDService<Security> {
         }
     }
 
-    private void validate(Security security) {
-        String pattern = "^[ а-яА-Я0-9]+$";
+    private boolean validate(Security security) {
+        String pattern = "^[ а-яА-Я0-9]+$"; //Поле NAME должно содержать символы кириллицы/цифры/пробелы
         Pattern p = Pattern.compile(pattern);
         Matcher m = p.matcher(security.getName());
-        if (!m.matches())
-            throw new RuntimeException("->Error: name of security incorrect. Name mast include cirilic, digit, whitespace.");
+        return m.matches();
     }
 
 }

@@ -19,13 +19,13 @@ public class ListUtils {
     private List<History> historyList;
 
     public List<Security> getListSecuritires(String pathSec) {
-        if (pathSec == null || pathSec.isEmpty()) throw new RuntimeException("->Error: Incorrect path of xml-file.");
+        if (pathSec == null || pathSec.isEmpty()) return null;
         XMLProcessor xmlPS2 = new XMLProcStAX();
         return securityList = xmlPS2.dataFromXML(pathSec, new Security());
     }
 
     public List<History> getListHistory(String pathHis) {
-        if (pathHis == null || pathHis.isEmpty()) throw new RuntimeException("->Error: Incorrect path of xml-file.");
+        if (pathHis == null || pathHis.isEmpty()) return null;
         XMLProcessor xmlPH2 = new XMLProcStAX();
         return historyList = xmlPH2.dataFromXML(pathHis, new History());
     }
