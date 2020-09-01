@@ -11,8 +11,8 @@ import com.javakonst.utils.ListUtils;
 import java.util.List;
 
 public class ServiceAPI {
-    private List<Security> listSecuritires;
-    private List<History> listHistory;
+    private final List<Security> listSecuritires;
+    private final List<History> listHistory;
     
     public ServiceAPI(String filepath_securities, String filepath_history) {
         super();
@@ -21,16 +21,16 @@ public class ServiceAPI {
         listHistory = listUtils.getListHistory(filepath_history);
     }
     
-    public List<Security> listAllSecuritires() {
+    public List<Security> listGetAllSecuritires() {
         return listSecuritires;
     }
     
-    public Security listReadSecurityBySecid(String secid) {
+    public Security listGetSecurityBySecid(String secid) {
         SecuritiesDAO securitiesDAO = new SecuritiesDAO();
         return securitiesDAO.entityRead(secid, listSecuritires);
     }
     
-    public List<Security> listCreateSecurity(Security security) {
+    public List<Security> listSaveSecurity(Security security) {
         SecuritiesDAO securitiesDAO = new SecuritiesDAO();
         securitiesDAO.entityCreate(security, listSecuritires);
         return listSecuritires;
@@ -48,16 +48,16 @@ public class ServiceAPI {
         return listSecuritires;
     }
     
-    public List<History> listAllHistory() {
+    public List<History> listGetAllHistory() {
         return listHistory;
     }
     
-    public History listReadHistoryBySecid(String secid) {
+    public History listGetHistoryBySecid(String secid) {
         HistoryDAO historyDAO = new HistoryDAO();
         return historyDAO.entityRead(secid, listHistory);
     }
     
-    public List<History> listCreateHistory(History history) {
+    public List<History> listSaveHistory(History history) {
         HistoryDAO historyDAO = new HistoryDAO();
         historyDAO.entityCreate(history, listHistory);
         return listHistory;
@@ -85,12 +85,12 @@ public class ServiceAPI {
         return dbService.saveSecurity(security);
     }
     
-    public List<Security> dbAllSecurity() {
+    public List<Security> dbGetAllSecurity() {
         DBService dbService = new DBServiceDAO();
         return dbService.getAllSecurities();
     }
     
-    public Security dbSecurityBySecid(String secid) {
+    public Security dbGetSecurityBySecid(String secid) {
         DBService dbService = new DBServiceDAO();
         return dbService.getSecurityBySecid(secid);
     }
@@ -100,7 +100,7 @@ public class ServiceAPI {
         return dbService.deleteSecurityBySecid(secid);
     }
     
-    public int dbDeleteHistoryBySecuritySecid(String secid) {
+    public int dbDeleteHistoryBySecid(String secid) {
         DBService dbService = new DBServiceDAO();
         return dbService.deleteHistoryBySecuritySecid(secid);
     }

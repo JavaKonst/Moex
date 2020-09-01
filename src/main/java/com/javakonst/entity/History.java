@@ -42,9 +42,6 @@ public class History extends Entity {
     @Column
     private Double close;
 
-//    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-//    ", tradedate=" + dateFormat.format(tradedate) +
-    
     @Override
     public String toString() {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");

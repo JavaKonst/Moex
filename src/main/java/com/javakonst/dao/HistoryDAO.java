@@ -6,6 +6,7 @@ import com.sun.istack.Nullable;
 import java.util.List;
 
 public class HistoryDAO implements CRUDService<History> {
+
     @Override
     public void entityCreate(History entity, List<History> entityList) {
         entityList.add(entity);
